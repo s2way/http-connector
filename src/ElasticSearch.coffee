@@ -2,9 +2,9 @@ elasticsearch = require 'elasticsearch'
 
 class ElasticSearch
 
-    constructor: (@_datasource, deps) ->
+    constructor: (dataSource, deps) ->
+        throw new Error 'Invalid ES data source' unless dataSource?
         @_elasticsearch = deps?.elasticsearch or elasticsearch
-        throw new Error 'Invalid ES data source' unless @_dataSource?
         @client = new @_elasticsearch.Client(
             host: dataSource.host + ':' + dataSource.port
             log: dataSource.log
@@ -63,10 +63,10 @@ class ElasticSearch
 
         @client.create options, callback
 
-    bulk: (dataSource, data, callback, refreshIndex = false) ->
+    bulk: (data, callback, refreshIndex = false) ->
         @client.bulk {body : data, refresh: refreshIndex}, callback
 
-    indexExists: (dataSource, index, callback) ->
+    indexExists: (index, callback) ->
         @client.indices.exists index : index, callback
 
     createIndex: (params, callback) ->
