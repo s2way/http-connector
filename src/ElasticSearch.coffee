@@ -9,14 +9,14 @@ class ElasticSearch
             host: dataSource.host + ':' + dataSource.port
             log: dataSource.log
             keepAlive: false
-            requestTimeout: dataSource.timeoutd or 30000
+            requestTimeout: dataSource.timeout or 30000
         )
 
     query: (params, callback) ->
         options =
-            index: params?.indexd or null
-            type: params?.typed or null
-            body: params?.queryd or null
+            index: params?.index or null
+            type: params?.type or null
+            body: params?.query or null
 
         options.scroll = params?.scroll if params?.scroll?
         options.size = params?.size if params?.size?
@@ -25,17 +25,17 @@ class ElasticSearch
 
     scroll: (params, callback) ->
         options =
-            scrollId: params?.scrollIdd or null
-            scroll: params?.scrolld or null
+            scrollId: params?.scrollId or null
+            scroll: params?.scroll or null
 
         @client.scroll options, callback
 
     # Get a typed JSON from the index based on its id
     get: (params, callback) ->
         options =
-            index: params?.indexd or null
-            type: params?.typed or null
-            id: params?.idd or 0
+            index: params?.index or null
+            type: params?.type or null
+            id: params?.id or 0
 
         @client.get options, callback
 
@@ -44,9 +44,9 @@ class ElasticSearch
     # This is an upsert-like function, use create() if you want unique document index control
     save: (params, callback) ->
         options =
-            index: params?.indexd or null
-            type: params?.typed or null
-            body: params?.datad or null
+            index: params?.index or null
+            type: params?.type or null
+            body: params?.data or null
 
         options.id = params?.id if params?.id?
 
@@ -56,10 +56,10 @@ class ElasticSearch
     # If a document with the same index, type, and id already exists, an error will occur
     create: (params, callback) ->
         options =
-            index: params?.indexd or null
-            type: params?.typed or null
-            id: params?.idd or 0
-            body : params?.datad or null
+            index: params?.index or null
+            type: params?.type or null
+            id: params?.id or 0
+            body : params?.data or null
 
         @client.create options, callback
 
