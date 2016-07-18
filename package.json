@@ -1,0 +1,32 @@
+{
+  "name": "elasticsearch-connector",
+  "version": "0.1.0",
+  "description": "ElasticSearch connector",
+  "main": "main.coffee",
+  "scripts": {
+    "pretest": "node_modules/.bin/coffeelint -f coffeelint.json src",
+    "test": "mocha test --recursive -R progress --compilers coffee:coffee-script/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/s2way/elasticsearch-connector.git"
+  },
+  "keywords": [
+    "elasticsearch",
+    "connector"
+  ],
+  "author": "Newborns/S2Way",
+  "bugs": {
+    "url": "https://github.com/s2way/elasticsearch-connector/issues"
+  },
+  "homepage": "https://github.com/s2way/elasticsearch-connector",
+  "devDependencies": {
+    "coffee-script": "latest",
+    "coffeelint": "^1.9.4",
+    "expect.js": "^0.3.1",
+    "mocha": "^2.2.4"
+  },
+  "dependencies": {
+    "elasticsearch": "^11.0.1"
+  }
+}
