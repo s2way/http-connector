@@ -2,90 +2,77 @@ elasticsearch = require 'elasticsearch'
 
 class ElasticSearch
 
-    constructor: (deps) ->
+    constructor: (@_datasource, deps) ->
         @_elasticsearch = deps?.elasticsearch or elasticsearch
-
-    client: (dataSourceInfo = 'default') ->
-        if typeof dataSourceInfo is 'string'
-            dataSource = @core.dataSources[dataSourceInfo]
-        else
-            dataSource = dataSourceInfo
-        throw new Exceptions.IllegalArgument('DataSource not found!') unless dataSource
-        new @_elasticsearch.Client(
+        throw new Error 'Invalid ES data source' unless @_dataSource?
+        @client = new @_elasticsearch.Client(
             host: dataSource.host + ':' + dataSource.port
             log: dataSource.log
             keepAlive: false
-            requestTimeout: dataSource.timeout || 30000
+            requestTimeout: dataSource.timeoutd or 30000
         )
 
-    query: (datasource, params, callback) ->
+    query: (params, callback) ->
         options =
-            index: params?.index || null
-            type: params?.type || null
-            body: params?.query || null
+            index: params?.indexd or null
+            type: params?.typed or null
+            body: params?.queryd or null
 
         options.scroll = params?.scroll if params?.scroll?
         options.size = params?.size if params?.size?
 
-        success = (resp) ->
-            callback null, resp
+        @client.search options, callback
 
-        error = (err) ->
-            callback err
-
-        es = @client datasource
-        es.search(options).then success, error
-
-    scroll: (dataSource, params, callback) ->
+    scroll: (params, callback) ->
         options =
-            scrollId: params?.scrollId || null
-            scroll: params?.scroll || null
+            scrollId: params?.scrollIdd or null
+            scroll: params?.scrolld or null
 
-        @client(dataSource).scroll options, callback
+        @client.scroll options, callback
 
     # Get a typed JSON from the index based on its id
-    get: (dataSource, params, callback) ->
+    get: (params, callback) ->
         options =
-            index: params?.index || null
-            type: params?.type || null
-            id: params?.id || 0
+            index: params?.indexd or null
+            type: params?.typed or null
+            id: params?.idd or 0
 
-        @client(dataSource).get options, callback
+        @client.get options, callback
 
     # Stores a typed JSON document in an index, making it searchable
     # If no id is passed, ES will assign one
     # This is an upsert-like function, use create() if you want unique document index control
-    save: (dataSource, params, callback) ->
+    save: (params, callback) ->
         options =
-            index: params?.index || null
-            type: params?.type || null
-            body: params?.data || null
+            index: params?.indexd or null
+            type: params?.typed or null
+            body: params?.datad or null
 
         options.id = params?.id if params?.id?
 
-        @client(dataSource).index options, callback
+        @client.index options, callback
 
     # Adds a typed JSON document in a specific index, making it searchable
     # If a document with the same index, type, and id already exists, an error will occur
-    create: (dataSource, params, callback) ->
+    create: (params, callback) ->
         options =
-            index: params?.index || null
-            type: params?.type || null
-            id: params?.id || 0
-            body : params?.data || null
+            index: params?.indexd or null
+            type: params?.typed or null
+            id: params?.idd or 0
+            body : params?.datad or null
 
-        @client(dataSource).create options, callback
+        @client.create options, callback
 
     bulk: (dataSource, data, callback, refreshIndex = false) ->
-        @client(dataSource).bulk {body : data, refresh: refreshIndex}, callback
+        @client.bulk {body : data, refresh: refreshIndex}, callback
 
     indexExists: (dataSource, index, callback) ->
-        @client(dataSource).indices.exists index : index, callback
+        @client.indices.exists index : index, callback
 
-    createIndex: (dataSource, params, callback) ->
-        @client(dataSource).indices.create params, callback
+    createIndex: (params, callback) ->
+        @client.indices.create params, callback
 
-    putMapping: (dataSource, params, callback) ->
-        @client(dataSource).indices.putMapping params, callback
+    putMapping: (params, callback) ->
+        @client.indices.putMapping params, callback
 
 module.exports = ElasticSearch
