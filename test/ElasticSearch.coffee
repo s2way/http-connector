@@ -10,3 +10,13 @@ describe 'The ElasticSearch connector', ->
             expect(e.name).to.be 'Error'
             expect(e.message).to.be 'Invalid ES data source'
 
+    it 'should validating host without port if the datasource port not passed', ->
+
+        expectedHost = 'www.elasticsearch.com'
+
+        deps =
+            elasticsearch:
+                Client: (params) ->
+                    expect(params.host).to.eql expectedHost
+
+        new ElasticSearch host: expectedHost, deps
