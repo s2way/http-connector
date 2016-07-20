@@ -63,6 +63,17 @@ class ElasticSearch
 
         @client.create options, callback
 
+    # Update parts of a document
+    update: (params, callback) ->
+        options =
+            index: params?.index or null
+            type: params?.type or null
+            id: params?.id or 0
+            body:
+                doc: params?.data or null
+
+        @client.update options, callback
+
     bulk: (data, callback, refreshIndex = false) ->
         @client.bulk {body : data, refresh: refreshIndex}, callback
 
