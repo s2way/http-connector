@@ -9,4 +9,3 @@ describe 'The ElasticSearch connector', ->
         .to.throwError (e) ->
             expect(e.name).to.be 'Error'
             expect(e.message).to.be 'Invalid ES data source'
-
