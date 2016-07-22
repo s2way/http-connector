@@ -86,4 +86,10 @@ class ElasticSearch
     putMapping: (params, callback) ->
         @client.indices.putMapping params, callback
 
+    ping: (params, callback) ->
+        @client.ping params, callback
+
+    close: ->
+        @client.close()
+
 module.exports = ElasticSearch
