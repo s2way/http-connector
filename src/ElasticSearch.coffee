@@ -58,7 +58,7 @@ class ElasticSearch
         options =
             index: params?.index or null
             type: params?.type or null
-            id: params?.id or 0
+            id: params?.id or null
             body : params?.data or null
 
         @client.create options, callback
@@ -82,6 +82,10 @@ class ElasticSearch
 
     createIndex: (params, callback) ->
         @client.indices.create params, callback
+
+    # send: index and type
+    getMapping: (params, callback) ->
+        @client.indices.getMapping params, callback
 
     putMapping: (params, callback) ->
         @client.indices.putMapping params, callback
