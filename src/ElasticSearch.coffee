@@ -91,6 +91,7 @@ class ElasticSearch
         options =
             index: params?.index or null
             type: params?.type or null
+            ignoreConflicts: params?.ignoreConflicts or false
             body:
                 "#{params?.type}":
                     properties: params?.mapping
