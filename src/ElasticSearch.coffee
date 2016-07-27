@@ -88,6 +88,12 @@ class ElasticSearch
         @client.indices.getMapping params, callback
 
     putMapping: (params, callback) ->
+        options =
+            index: params?.index or null
+            type: params?.type or null
+            body:
+                "#{params?.type}":
+                    properties: params?.mapping
         @client.indices.putMapping params, callback
 
     ping: (params, callback) ->
