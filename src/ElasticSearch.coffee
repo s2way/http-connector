@@ -95,7 +95,7 @@ class ElasticSearch
             body:
                 "#{params?.type}":
                     properties: params?.mapping
-        @client.indices.putMapping params, callback
+        @client.indices.putMapping options, callback
 
     ping: (params, callback) ->
         @client.ping params, callback
