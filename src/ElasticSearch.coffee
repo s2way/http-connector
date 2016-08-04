@@ -81,7 +81,10 @@ class ElasticSearch
         @client.indices.exists index : index, callback
 
     createIndex: (params, callback) ->
-        @client.indices.create params, callback
+        options =
+            index: params?.index
+        options.body = mappings: params.mapping if params?.mapping?
+        @client.indices.create options, callback
 
     # send: index and type
     getMapping: (params, callback) ->
