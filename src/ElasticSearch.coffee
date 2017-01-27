@@ -84,6 +84,7 @@ class ElasticSearch
         options =
             index: params?.index
         options.body = mappings: params.mapping if params?.mapping?
+        options.body = settings: params.settings if params?.settings?
         @client.indices.create options, callback
 
     # send: index and type
