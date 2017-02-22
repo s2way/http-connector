@@ -72,6 +72,8 @@ class ElasticSearch
             body:
                 doc: params?.data or null
 
+        options.version = params.version if params?.version
+
         @client.update options, callback
 
     bulk: (data, callback, refreshIndex = false) ->
