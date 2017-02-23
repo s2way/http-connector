@@ -18,8 +18,9 @@ class ElasticSearch
             type: params?.type or null
             body: params?.query or null
 
-        options.scroll = params?.scroll if params?.scroll?
-        options.size = params?.size if params?.size?
+        options.scroll = params.scroll if params?.scroll?
+        options.size = params.size if params?.size?
+        options._source = params.source if params?.source?
 
         @client.search options, callback
 
@@ -48,7 +49,7 @@ class ElasticSearch
             type: params?.type or null
             body: params?.data or null
 
-        options.id = params?.id if params?.id?
+        options.id = params.id if params?.id?
 
         @client.index options, callback
 
