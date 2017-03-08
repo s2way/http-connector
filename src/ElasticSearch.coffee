@@ -74,6 +74,7 @@ class ElasticSearch
                 doc: params?.data or null
 
         options.version = params.version if params?.version
+        options.ttl = params.ttl if params?.ttl
 
         @client.update options, callback
 
