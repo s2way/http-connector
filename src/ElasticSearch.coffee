@@ -8,7 +8,7 @@ class ElasticSearch
         @client = new @_elasticsearch.Client(
             host: dataSource.host + ':' + dataSource.port
             log: dataSource.log
-            keepAlive: false
+            keepAlive: dataSource.keepAlive or false
             requestTimeout: dataSource.timeout or 30000
         )
 
@@ -30,6 +30,12 @@ class ElasticSearch
             scroll: params?.scroll or null
 
         @client.scroll options, callback
+
+    clearScroll: (scrollId, callback) ->
+        options =
+            scrollId: params?.scrollId
+
+        @client.clearScroll options, callback
 
     # Get a typed JSON from the index based on its id
     get: (params, callback) ->
@@ -66,6 +72,7 @@ class ElasticSearch
 
     # Update parts of a document
     update: (params, callback) ->
+
         options =
             index: params?.index or null
             type: params?.type or null
