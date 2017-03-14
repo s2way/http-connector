@@ -32,10 +32,7 @@ class ElasticSearch
         @client.scroll options, callback
 
     clearScroll: (scrollId, callback) ->
-        options =
-            scrollId: params?.scrollId
-
-        @client.clearScroll options, callback
+        @client.clearScroll {scrollId}, callback
 
     # Get a typed JSON from the index based on its id
     get: (params, callback) ->
