@@ -10,6 +10,7 @@ class ElasticSearch
             log: dataSource.log
             keepAlive: dataSource.keepAlive or false
             requestTimeout: dataSource.timeout or 30000
+            apiVersion: '5.0'
         )
 
     errors: elasticsearch.errors
@@ -95,7 +96,7 @@ class ElasticSearch
             index: params?.index
 
         options.body = {}
-        options.body.mappings = params.mapping if params?.mapping?
+        options.body.mappings = params.mappings if params?.mappings?
         options.body.settings = params.settings if params?.settings?
         @client.indices.create options, callback
 
