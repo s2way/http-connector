@@ -12,6 +12,8 @@ class ElasticSearch
             requestTimeout: dataSource.timeout or 30000
         )
 
+    errors: elasticsearch.errors
+
     query: (params, callback) ->
         options =
             index: params?.index or null
