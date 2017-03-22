@@ -6,7 +6,11 @@ class ElasticSearch
         throw new Error 'Invalid ES data source' unless dataSource?
         @_elasticsearch = deps?.elasticsearch or elasticsearch
         @client = new @_elasticsearch.Client(
-            host: dataSource.host + ':' + dataSource.port
+            host:
+                host: dataSource.host
+                auth: "#{dataSource.user}:#{dataSource.password}"
+                port: dataSource.port or 9200
+                protocol: dataSource.protocol or 'http'
             log: dataSource.log
             keepAlive: dataSource.keepAlive or false
             requestTimeout: dataSource.timeout or 30000
