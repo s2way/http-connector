@@ -89,6 +89,10 @@ class ElasticSearch
 
         @client.update options, callback
 
+    deleteByQuery: (params, callback) ->
+        { index, query } = params
+        @client.deleteByQuery {index, body: query: query}, callback
+
     bulk: (data, callback, refreshIndex = false) ->
         @client.bulk {body : data, refresh: refreshIndex}, callback
 
