@@ -18,7 +18,6 @@ class ElasticSearch
             log: dataSource.log
             keepAlive: dataSource.keepAlive or false
             requestTimeout: dataSource.timeout or 30000
-            apiVersion: '5.0'
         )
 
     errors: elasticsearch.errors
