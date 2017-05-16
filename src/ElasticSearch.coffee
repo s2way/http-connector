@@ -5,12 +5,16 @@ class ElasticSearch
     constructor: (dataSource, deps) ->
         throw new Error 'Invalid ES data source' unless dataSource?
         @_elasticsearch = deps?.elasticsearch or elasticsearch
+
+        host =
+            host: dataSource.host
+            port: dataSource.port or 9200
+            protocol: dataSource.protocol or 'http'
+
+        host.auth = "#{dataSource.user}:#{dataSource.password}" if dataSource?.user? or dataSource?.password?
+
         @client = new @_elasticsearch.Client(
-            host:
-                host: dataSource.host
-                auth: "#{dataSource.user}:#{dataSource.password}"
-                port: dataSource.port or 9200
-                protocol: dataSource.protocol or 'http'
+            host: host
             log: dataSource.log
             keepAlive: dataSource.keepAlive or false
             requestTimeout: dataSource.timeout or 30000
