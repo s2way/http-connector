@@ -11,7 +11,7 @@ class ElasticSearch
             port: dataSource.port or 9200
             protocol: dataSource.protocol or 'http'
 
-        host.auth = "#{dataSource.user}:#{dataSource.password}" if dataSource?.user? or dataSource?.password?
+        host.auth = "#{dataSource.user}:#{dataSource.password}" if dataSource?.user or dataSource?.password
 
         @client = new @_elasticsearch.Client(
             host: host
