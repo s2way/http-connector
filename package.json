@@ -1,7 +1,7 @@
 {
-  "name": "http-connector",
+  "name": "watcher",
   "version": "0.1.0",
-  "description": "HTTP connector",
+  "description": "Legacy watcher",
   "main": "main.coffee",
   "scripts": {
     "pretest": "node_modules/.bin/coffeelint -f coffeelint.json src",
@@ -9,17 +9,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/s2way/http-connector.git"
+    "url": "https://github.com/s2way/watcher.git"
   },
   "keywords": [
-    "http",
-    "connector"
+    "watcher"
   ],
   "author": "Newborns/S2Way",
   "bugs": {
-    "url": "https://github.com/s2way/http-connector/issues"
+    "url": "https://github.com/s2way/watcher/issues"
   },
-  "homepage": "https://github.com/s2way/http-connector",
+  "homepage": "https://github.com/s2way/watcher",
   "devDependencies": {
     "coffee-script": "latest",
     "coffeelint": "^1.9.4",
@@ -27,6 +26,7 @@
     "mocha": "^2.2.4"
   },
   "dependencies": {
-    "uuid": "^3.0.1"
+    "exception": "git://github.com/s2way/Exception.git",
+    "rules": "git://github.com/s2way/Rules.git"
   }
 }
