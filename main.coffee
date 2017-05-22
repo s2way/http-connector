@@ -1,1 +1,1 @@
-module.exports = require './src/Watcher.coffee'
+module.exports = require './src/Http.coffee'
