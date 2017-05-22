@@ -1,1 +1,1 @@
-module.exports = require './src/ElasticSearch.coffee'
+module.exports = require './src/Http.coffee'
